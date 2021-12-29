@@ -1,12 +1,11 @@
-const Wallet = require('../models/Wallet');
-
 const   router = require('express').Router(),
         User = require('../models/User'),
         { deleteWallet } = require('../helpers/deleteWallet'),
+        { registerEthWallet } = require('../helpers/registerEthWallet'),
         { registerWallet } = require('../helpers/registerWallet'),
         { walletExists } = require('../helpers/walletExists');
 
-router.route('/wallet')
+router.route('/wallet') // Doesn't create a real wallet, just stores the address
 .put(async function(req, res) {
     let msg = '', user = await User.findOne({email: req.body.email}), wallet = null;
     msg += user ? '' : 'Este email no existe. ';
@@ -39,6 +38,18 @@ router.route('/wallet')
         data: wallet,
         msg: msg
     })
+});
+
+router.route('/ethWallet') // Creates a real Ethereum wallet
+.put(async function(req, res) {
+    let msg = '', wallet = null;
+    wallet = await registerEthWallet(req.body.userId);
+    msg += wallet && wallet._id ? 'La billetera se generó correctamente. ' : 'No se pudo generar esta billetera de Ethereum. ';
+    res.send({
+        success: wallet && wallet._id,
+        data: wallet,
+        msg: msg
+    });
 });
 
 module.exports = router;

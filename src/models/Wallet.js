@@ -6,7 +6,7 @@ const WalletSch = new Schema(
             type: Schema.ObjectId,
             required: true
         },
-        direction: {
+        address: {
             type: String,
             required: true
         },
