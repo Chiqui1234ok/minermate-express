@@ -34,7 +34,11 @@ const UserSch = new Schema(
                 type: String,
                 required: true
             }
-        }]
+        }],
+        sessionID: {
+            type: String,
+            required: false
+        }
     },
     {
         timestamps: true // Generate createdAt + updatedAt's dates
