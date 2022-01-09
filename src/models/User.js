@@ -3,7 +3,6 @@ const bcryptjs = require('bcryptjs');
 
 const UserSch = new Schema(
     {
-        humanId: Number,
         name: String,
         email: {
             type: String,
@@ -34,11 +33,7 @@ const UserSch = new Schema(
                 type: String,
                 required: true
             }
-        }],
-        sessionID: {
-            type: String,
-            required: false
-        }
+        }]
     },
     {
         timestamps: true // Generate createdAt + updatedAt's dates

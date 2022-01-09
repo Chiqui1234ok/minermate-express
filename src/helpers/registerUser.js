@@ -3,7 +3,7 @@ const   helpers = {},
 
 helpers.registerUser = async function(data) {
     // Set administrative rol for 1st user
-    const rol = await User.countDocuments() == 0 ? 1 : 4;
+    const rol = await User.countDocuments() == 0 ? 1 : 3;
     try {
         // Create user with user's input
         const user = new User({

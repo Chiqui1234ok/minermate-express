@@ -13,6 +13,10 @@ const WalletSch = new Schema(
         network: {
             type: String,
             required: true
+        },
+        symbol: {
+            type: String,
+            required: true
         }
     },
     {

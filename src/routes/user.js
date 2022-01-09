@@ -22,12 +22,11 @@ router.route('/user')
         const salt = bcryptjs.genSaltSync(10);
         newUser = await registerUser({
             email: req.body.email,
-            password: bcryptjs.hashSync(req.body.password, salt)
+            password: req.body.password
+            // password: bcryptjs.hashSync(req.body.password, salt)
         });
         msg += 'Usuario registrado correctamete. ';
     }
-    console.log('/user PUT');
-    console.log(req.body.password);
     res.send({
         success: newUser && newUser._id ? true : false,
         data: newUser,
@@ -55,14 +54,11 @@ router.route('/user/login')
     let msg = '', data = {};
     let user = await userExists(req.body.email);
     if(user && user._id) {
-        console.log('/user/login POST');
-        console.log(req.body.password);
         data.password = bcryptjs.compareSync(req.body.password, user.password);
         msg += user && data.password ? '' : 'La contraseña es incorrecta. '; // (user's input, password hashed in DB)
         if(msg == '') {
+            data.email = req.session.email = user.email;
             data.password = req.session.password = user.password;
-            data.id = req.session.sessionID = req.sessionID; // Will query things about the user with this ID
-            user.sessionId = req.sessionID; // Here's the session ID, saved in DB
             await user.save();
             msg += 'Iniciaste sesión correctamente. ';
         }

@@ -4,6 +4,7 @@ const   helpers = {},
 helpers.registerInvestment = async function(data) {
     try {
         const investment = new Investment({
+            officeID: data.officeID,
             name: data.name,
             powerConsumption: data.powerConsumption,
             stockPrice: data.stockPrice        

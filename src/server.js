@@ -1,6 +1,7 @@
 const   express = require('express');
         session = require('express-session'),
-        cors = require('cors');
+        cors = require('cors'),
+        morgan = require('morgan');
 // Init             👇
 const app = express();
 const path = require('path');
@@ -10,6 +11,12 @@ const path = require('path');
 
 // CORS             👇
 app.use(cors());
+
+// Morgan             👇
+morgan.token('body', req => {
+    return JSON.stringify(req.body)
+});
+app.use(morgan(':method :url :body'))
 
 // Settings         👇
 app.set('port', process.env.minermatePort || 3000);
@@ -33,14 +40,13 @@ app.use(session({
 
 // Routes           👇
 app.use(
+    require('./routes/error'),
     require('./routes/index'),
-    require('./routes/user'),
     require('./routes/investment'),
-    require('./routes/investmentRelation'),
-    require('./routes/payout'),
     require('./routes/office'),
-    require('./routes/wallet'),
-    require('./routes/error')
+    require('./routes/payout'),
+    require('./routes/user'),
+    require('./routes/wallet')
 );
 
 // Static files     👇

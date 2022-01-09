@@ -6,7 +6,8 @@ helpers.registerWallet = async function(data) {
         const wallet = new Wallet({
             userId: data.userId,
             address: data.address,
-            network: data.network
+            network: data.network,
+            symbol: data.symbol
         });
         await wallet.save();
         return wallet;
