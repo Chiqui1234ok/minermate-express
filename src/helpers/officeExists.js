@@ -15,3 +15,5 @@ helpers.officeExists = async function(name) {
         return false;
     }
 }
+
+module.exports = helpers;

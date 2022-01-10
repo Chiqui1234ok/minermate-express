@@ -1,3 +1,6 @@
+const { deleteOffice } = require('../helpers/deleteOffice');
+const { patchOffice } = require('../helpers/patchOffice');
+
 const   router = require('express').Router(),
         OfficeCost = require('../models/OfficeCost'),
         { officeExists } = require('../helpers/officeExists'),
@@ -17,11 +20,29 @@ router.route('/office')
 })
 .put(async (req, res) => {
     let msg = '', office = null;
-    msg += req.body.name ? '' : 'La oficina necesita un nombre. ';
-    msg += await officeExists(req.body.name) ? 'Esta oficina ya existe. ' : '';
+    msg += req.body.officeName ? '' : 'La oficina necesita un nombre. ';
+    msg += await officeExists(req.body.officeName) ? 'Esta oficina ya existe. ' : '';
     if(msg == '') {
-        office = await registerOffice(req.body.name);
-        msg += 'Oficina registrada correctamente. ';
+        office = await registerOffice(req.body.officeName);
+        if(office && office._id)
+            msg += 'Oficina registrada correctamente. ';
+    }
+    res.send({
+        success: office && office._id ? true : false,
+        data: office,
+        msg: msg
+    });
+})
+.patch(async (req, res) => {
+    let msg = '', office = null;
+    msg += req.body.officeID ? '' : 'Indicá qué oficina editar. ';
+    msg += req.body.newOfficeName ? '' : 'Indicá el nombre de la oficina. ';
+    if(msg == '') {
+        office = await patchOffice(req.body.officeID, {
+            name: req.body.newOfficeName
+        });
+        if(office && office._id)
+            msg += 'Oficina editada correctamente. ';
     }
     res.send({
         success: office && office._id ? true : false,
@@ -31,7 +52,15 @@ router.route('/office')
 })
 .delete(async (req, res) => {
     let msg = '', office = null;
-
+    msg += req.body.officeName ? '' : 'Indicá qué oficina eliminar. ';
+    if(msg == '') {
+        office = await deleteOffice(req.body.officeName);
+    }
+    res.send({
+        success: true,
+        data: office,
+        msg: msg
+    });
 });
 
 router.route('/office/cost') // Gets costs of one office
@@ -78,7 +107,7 @@ router.route('/office/cost') // Gets costs of one office
         msg: msg
     })
 })
-.patch(async (req, res) => { // Add a payment to one cost's office
+.patch(async (req, res) => { // Add a payment to one office's cost
     let msg = '', officeCost = null;
     let officeCostCounter = await OfficeCost.findById(req.body.officeCostID);
     officeCostCounter = officeCostCounter.payments.length;

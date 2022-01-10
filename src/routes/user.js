@@ -37,7 +37,7 @@ router.route('/user')
     let msg = '', user = null;
     // Check if user exists
     user = await userExists(req.body.email);
-    msg = user ? '' : 'Este usuario no existe. ';
+    msg = user && user._id ? '' : 'Este usuario no existe. ';
     if(msg == '') {
         user = await deleteUser(user._id);
         msg += user && user._id ? 'El usuario se eliminó correctamente. ' : 'El usuario no pudo eliminarse. ';
