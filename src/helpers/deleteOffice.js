@@ -1,5 +1,5 @@
 const   helpers = {},
-        Office = require('../models/Office')
+        Office = require('../models/Office'),
         { officeExists } = require('../helpers/officeExists');
 
 helpers.deleteOffice = async function(officeName) {
