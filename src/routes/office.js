@@ -1,9 +1,8 @@
-const { deleteOffice } = require('../helpers/deleteOffice');
-const { patchOffice } = require('../helpers/patchOffice');
-
 const   router = require('express').Router(),
         OfficeCost = require('../models/OfficeCost'),
+        { deleteOffice } = require('../helpers/deleteOffice'),
         { officeExists } = require('../helpers/officeExists'),
+        { patchOffice } = require('../helpers/patchOffice'),
         { registerOffice } = require('../helpers/registerOffice'),
         { registerOfficeCost } = require('../helpers/registerOfficeCost');
 
@@ -63,14 +62,19 @@ router.route('/office')
     });
 });
 
+// Office's cost
+
 router.route('/office/cost') // Gets costs of one office
 .get(async (req, res) => {
     let msg = '', office = null, officeCosts = null;
-    office = await officeExists(req.body.name);
+    office = await officeExists(req.body.officeName);
     msg += office && office._id ? '' : 'La oficina no existe. ';
     if(msg == '') {
         officeCosts = await OfficeCost.find({officeID: office._id});
-        msg += officeCosts && officeCosts._id ? '' : 'Esta oficina no tiene ningún gasto operativo. ';
+        if(officeCosts && officeCosts.length > 0)
+            msg += 'Se encontraron los gastos operativos de esta oficina. ';
+        else
+            msg += 'Esta oficina no tiene ningún gasto operativo. ';
     }
     res.send({
         success: msg == '' ? true : false,
@@ -83,9 +87,9 @@ router.route('/office/cost') // Gets costs of one office
 })
 .put(async (req, res) => { // Add a cost to one office
     let msg = '', office = null, cost = null;
-    msg += req.body.name ? '' : 'Indica el nombre de la oficina. ';
+    msg += req.body.officeName ? '' : 'Indica el nombre de la oficina. ';
     if(msg == '')
-        office = await officeExists(req.body.name);
+        office = await officeExists(req.body.officeName);
     msg += office && office._id ? '' : 'La oficina no existe. ';
     msg += req.body.type ? '' : 'Indica el tipo de gasto. ';
     msg += req.body.amount || req.body.symbol ? '' : 'Se precisa el monto del gasto, además de su símbolo (ejemplo: 1,5 ETH, 300 USD). ';
@@ -97,6 +101,8 @@ router.route('/office/cost') // Gets costs of one office
             symbol: req.body.symbol,
             receipt: req.body.receipt
         });
+        if(cost && cost._id)
+            msg += 'Gasto operativo registrado correctamente. ';
     }
     res.send({
         success: office && office._id && cost && cost._id ? true : false,

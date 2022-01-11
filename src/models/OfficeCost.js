@@ -15,7 +15,7 @@ const OfficeCostSch = new Schema(
             required: true
         },
         symbol: {
-            type: Number,
+            type: String,
             required: true
         },
         receipt: { // Ex: Photo of electricity's receipt

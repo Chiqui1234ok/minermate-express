@@ -1,7 +1,7 @@
 const   helpers = {},
         OfficeCost = require('../models/OfficeCost');
     
-helpers.registerCost = async function(officeID, data) {
+helpers.registerOfficeCost = async function(officeID, data) {
     try {
         const officeCost = new OfficeCost({
             officeID: officeID,
@@ -18,3 +18,5 @@ helpers.registerCost = async function(officeID, data) {
         return false;
     }
 };
+
+module.exports = helpers;

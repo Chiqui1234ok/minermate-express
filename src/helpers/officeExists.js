@@ -4,10 +4,11 @@ const   helpers = {},
 helpers.officeExists = async function(name) {
     try {
         let office = null;
-        if(name)
-            office = await Office.findOne({name: req.body.name});
-        else
+        if(name) {
+            office = await Office.findOne({name: name});
+        } else {
             office = await Office.find();
+        }
         return office;
     }
     catch(err) {
