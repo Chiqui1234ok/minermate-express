@@ -3,7 +3,7 @@ const   helpers = {},
 
 helpers.registerInvestmentCost = async function(officeCostID, data) {
     try {
-        let cost = await OfficeCost.findOneById(officeCostID);
+        let cost = await OfficeCost.findById(officeCostID);
         cost.payments.push({
             investmentID: data.investmentID,
             amount: data.amount,
@@ -18,3 +18,5 @@ helpers.registerInvestmentCost = async function(officeCostID, data) {
         return false;
     }
 };
+
+module.exports = helpers;

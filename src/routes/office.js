@@ -3,6 +3,7 @@ const   router = require('express').Router(),
         { deleteOffice } = require('../helpers/deleteOffice'),
         { officeExists } = require('../helpers/officeExists'),
         { patchOffice } = require('../helpers/patchOffice'),
+        { registerInvestmentCost } = require('../helpers/registerInvestmentCost'),
         { registerOffice } = require('../helpers/registerOffice'),
         { registerOfficeCost } = require('../helpers/registerOfficeCost');
 
@@ -10,7 +11,10 @@ router.route('/office')
 .get(async (req, res) => {
     let msg = '', office = null;
     const offices = await officeExists();
-    msg += offices & offices.length > 0 ? '' : 'No se encontraron oficinas registradas. ';
+    // Just a conditional for give better info to front-end user 👇
+    const officeMsg = offices && offices.length > 1 ? `Se encontraron ${offices.length} oficinas. ` : `Se encontró 1 oficina. `;
+    //
+    msg += offices && offices.length > 0 ? officeMsg : 'No se encontraron oficinas registradas. ';
     res.send({
         success: msg.length == '' ? true : false,
         data: offices,
@@ -125,7 +129,7 @@ router.route('/office/cost') // Gets costs of one office
         tx: req.body.tx
     });
     res.send({
-        success: officeCost.payments.length > officeCostCounter ? true : false,
+        success: officeCost.payments && officeCost.payments.length > officeCostCounter ? true : false,
         data: officeCost,
         msg: msg 
     });
