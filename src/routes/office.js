@@ -119,7 +119,7 @@ router.route('/office/cost') // Gets costs of one office
         msg: msg
     })
 })
-.patch(async (req, res) => { // Add a payment to one office's cost
+.patch(async (req, res) => { // Add a payment to one office's cost and link to investment
     let msg = '', officeCost = null, officeCostCounter = null, patchedBalance = null;
     // Check user's input 👇
     msg += req.body.investmentID ? '' : 'Indicá un proyecto válido. ';

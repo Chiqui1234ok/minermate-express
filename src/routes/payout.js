@@ -4,7 +4,7 @@ const   router = require('express').Router(),
         Wallet = require('../models/Wallet'),
         { registerPayout } = require('../helpers/registerPayout');
 
-router.route('/payout')
+router.route('/payout') // Register a payment to some investor/user
 .put(async function (req, res) {
     let msg = '', payout = null;
     //
@@ -37,6 +37,11 @@ router.route('/payout')
         data: payout,
         msg: msg
     });
+});
+
+router.route('/payout/pool') // Register pool payment in investment
+.put(async function (req, res) {
+
 });
 
 module.exports = router;

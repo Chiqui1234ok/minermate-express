@@ -6,10 +6,9 @@ helpers.patchAvailableBalance = async function(investmentID, data) {
         // Get investment 👇
         let investment = await Investment.findById(investmentID);
         // Get desired balance 👇
-        let availableBalance = investment.availableBalance.map(function(e) { return e.symbol; }).indexOf(data.symbol);
+        let availableBalanceIndex = investment.availableBalance.map(function(e) { return e.symbol; }).indexOf(data.symbol);
         // Update and save balance 👇
-        availableBalance.amount += data.amount;
-        investment.availableBalance = availableBalance;
+        investment.availableBalance[availableBalanceIndex] = data.amount;
         await investment.save();
         return investment;
     }
