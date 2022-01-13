@@ -127,7 +127,7 @@ router.route('/office/cost') // Gets costs of one office
     msg += req.body.symbol && req.body.symbol.length > 0 && req.body.symbol.length <= 5 ? '' : 'Indicá un símbolo de dinero válido (ej: USD, ETH, RVN, etc). ';
     
     // Count existent costs registered in this office, just to check if a new cost is submitted at end of this code.
-    let officeCostCounter = await OfficeCost.findById(req.body.officeCostID);
+    officeCostCounter = await OfficeCost.findById(req.body.officeCostID);
     officeCostCounter = officeCostCounter.payments.length;
     // Create new cost payed by investment/project 👇
     officeCost = await registerInvestmentCost(req.body.officeCostID, { // ID of OfficeCost passed from front-end

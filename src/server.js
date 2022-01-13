@@ -19,7 +19,7 @@ morgan.token('body', req => {
 app.use(morgan(':method :url :body'))
 
 // Settings         👇
-app.set('port', process.env.minermatePort || 3000);
+app.set('port', process.env.PORT || 3000);
 
 // Middlewares      👇
 app.use(express.urlencoded({
@@ -29,12 +29,12 @@ app.use(express.json());
 
 // Session store
 app.use(session({
-    secret: process.env.minermateSecret,
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: {
         maxAge: 14400000, // 2.400.000 = 1 hour
-        secure: process.env.minermateDevelopment ? false : true
+        secure: process.env.DEV ? false : true
     }
 }));
 
