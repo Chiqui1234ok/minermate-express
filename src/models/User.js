@@ -32,7 +32,13 @@ const UserSch = new Schema(
             symbol: {
                 type: String,
                 required: true
-            }
+            },
+            tx: [ // Link to payout generated in the system
+                {
+                    type: Schema.ObjectId,
+                    required: true
+                }
+            ]
         }]
     },
     {

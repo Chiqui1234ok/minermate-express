@@ -18,8 +18,7 @@ router.route('/payout')
     msg += req.body.amount ? '' : 'Indica el monto de este pago. ';
     msg += req.body.symbol ? '' : 'Indica el símbolo de este pago. Por ejemplo, "U$D", "ETH", etc. ';
     //
-    if(process.env.minermateDevelopment == 'true') { // If dev mode, inject default userId & investmentId
-        req.body.userId = await User.findOne({email: 'santiagogimenez@outlook.com.ar'});
+    if(process.env.minermateDevelopment == 'true') { // If dev mode, inject default investmentId
         req.body.investmentId = await Investment.find().limit(1);
     }
     // If all valid, create payout 👇

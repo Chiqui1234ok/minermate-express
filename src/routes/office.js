@@ -1,3 +1,5 @@
+const { patchAvailableBalance } = require('../helpers/patchAvailableBalance');
+
 const   router = require('express').Router(),
         OfficeCost = require('../models/OfficeCost'),
         { deleteOffice } = require('../helpers/deleteOffice'),
@@ -118,18 +120,29 @@ router.route('/office/cost') // Gets costs of one office
     })
 })
 .patch(async (req, res) => { // Add a payment to one office's cost
-    let msg = '', officeCost = null;
+    let msg = '', officeCost = null, officeCostCounter = null, patchedBalance = null;
+    // Check user's input 👇
+    msg += req.body.investmentID ? '' : 'Indicá un proyecto válido. ';
+    msg += req.body.amount && !isNaN(req.body.amount) ? '' : 'Indicá un monto válido. ';
+    msg += req.body.symbol && req.body.symbol.length > 0 && req.body.symbol.length <= 5 ? '' : 'Indicá un símbolo de dinero válido (ej: USD, ETH, RVN, etc). ';
+    
+    // Count existent costs registered in this office, just to check if a new cost is submitted at end of this code.
     let officeCostCounter = await OfficeCost.findById(req.body.officeCostID);
     officeCostCounter = officeCostCounter.payments.length;
-    // ID of OfficeCost passed from front-end
-    officeCost = await registerInvestmentCost(req.body.officeCostID, {
+    // Create new cost payed by investment/project 👇
+    officeCost = await registerInvestmentCost(req.body.officeCostID, { // ID of OfficeCost passed from front-end
         investmentID: req.body.investmentID,
         amount: req.body.amount,
         symbol: req.body.symbol,
         tx: req.body.tx
     });
+    // Update balance of that investment 👇
+    patchedBalance = await patchAvailableBalance(req.body.investmentID, {
+        amount: req.body.amount,
+        symbol: req.body.symbol
+    });
     res.send({
-        success: officeCost.payments && officeCost.payments.length > officeCostCounter ? true : false,
+        success: officeCost.payments && officeCost.payments.length > officeCostCounter && patchedBalance ? true : false,
         data: officeCost,
         msg: msg 
     });

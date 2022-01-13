@@ -22,10 +22,18 @@ const InvestmentSch = new Schema(
             type: Number,
             default: 100
         },
-        availableBalance: { // Balance (discounting debts)
-            type: Number,
-            default: 0
-        },
+        availableBalance: [ // Balance (discounting debts)
+            {
+                amount: {
+                    type: Number,
+                    default: 0
+                },
+                symbol: {
+                    type: String,
+                    required: true
+                }
+            }
+        ],
         thumbnail: {
             type: String,
             default: 'https://minermate.net/assets/img/investments/default-mining-rig-mobile.webp'
@@ -35,7 +43,7 @@ const InvestmentSch = new Schema(
         // Y compararlo con holdear cripto en esa misma época, para ver qué inversión terminó ganando
         totalMined: [
             {
-                quantity: {
+                amount: {
                     type: Number,
                     default: 0
                 },
