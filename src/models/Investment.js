@@ -41,7 +41,7 @@ const InvestmentSch = new Schema(
         // For stats purpose
         // Sería bueno indicar el la fecha de creación y capital inicial para contrastarlo con lo minado en total
         // Y compararlo con holdear cripto en esa misma época, para ver qué inversión terminó ganando
-        totalMined: [
+        totalMined: [ // Here we store all pool's payments to Investment
             {
                 amount: {
                     type: Number,

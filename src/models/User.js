@@ -20,7 +20,7 @@ const UserSch = new Schema(
             type: Number,
             required: true
         },
-        tyc: { // '#' is false, an URL is true
+        tyc: { // '#' is false | an URL is true
             type: String,
             default: '#'
         },
