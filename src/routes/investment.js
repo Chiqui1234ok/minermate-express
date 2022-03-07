@@ -1,7 +1,10 @@
 const   router = require('express').Router(),
         { investmentExists } = require('../helpers/investmentExists'),
         { patchInvestment } = require('../helpers/patchInvestment'),
-        { registerInvestment } = require('../helpers/registerInvestment');
+        { pendingProjectExists } = require('../helpers/pendingProjectExists'),
+        { registerInvestment } = require('../helpers/registerInvestment'),
+        { registerPendingProject } = require('../helpers/registerPendingProject');
+        
 
 router.route('/investment')
 .get(async (req, res) => {
@@ -66,6 +69,45 @@ router.route('/investment')
     res.send({
         success: investment && investment._id ? true : false,
         data: investment,
+        msg: msg
+    });
+});
+
+router.route('/investment/receipt')
+.get(async (req, res) => {
+    let msg = '', investment = null;
+    console.log(req.headers);
+    res.send({
+        success: true,
+        data: investment,
+        msg: msg
+    });
+})
+.put(async (req, res) => {
+    let msg = '', pendingProject = null;
+
+    // Check if Pending project already exists 👇
+    msg += await pendingProjectExists(req.body.name) ? 'Este proyecto pendiente ya fue creado. ' : '';
+
+    // Check input 👇
+    msg += (req.body.name && req.body.name.length > 5) ? '' : 'El nombre debe tener más de 5 caracteres. ';
+    msg += (req.body.description && req.body.description.length >= 40) ? '' : 'La descripción debe contar con al menos 40 caracteres. ';
+    msg += (req.body.stockPrice && req.body.stockPrice > 0) ? '' : 'El precio de acción debe ser un numérico positivo. ';
+    
+    if(msg == '') {
+        pendingProject = await registerPendingProject({
+            name: req.body.name,
+            description: req.body.description,
+            stockPrice: req.body.stockPrice,
+            stockQuantity: req.body.stockQuantity,
+            thumbnail: req.body.thumbnail
+        });
+        msg += 'Proyecto pendiente de financiación creado exitosamente. ';
+    }
+
+    res.send({
+        success: pendingProject && pendingProject._id ? true : false,
+        data: pendingProject,
         msg: msg
     });
 });
