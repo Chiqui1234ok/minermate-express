@@ -1,9 +1,11 @@
 const   router = require('express').Router(),
+        PendingInvestment = require('../models/PendingProject'),
         { investmentExists } = require('../helpers/investmentExists'),
         { patchInvestment } = require('../helpers/patchInvestment'),
         { pendingProjectExists } = require('../helpers/pendingProjectExists'),
         { registerInvestment } = require('../helpers/registerInvestment'),
-        { registerPendingProject } = require('../helpers/registerPendingProject');
+        { registerPendingProject } = require('../helpers/registerPendingProject'),
+        { registerReceipt } = require('../helpers/registerReceipt');
         
 
 router.route('/investment')
@@ -63,17 +65,57 @@ router.route('/investment')
             stockQuantity: req.body.stockQuantity,
             thumbnail: req.body.thumbnail ? req.body.thumbnail : '#'
         });
-        if(investment && investment._id)
+        if(investment)
             msg += 'Proyecto editado correctamente. ';
     }
     res.send({
-        success: investment && investment._id ? true : false,
+        success: investment ? true : false,
         data: investment,
         msg: msg
     });
 });
 
 router.route('/investment/receipt')
+.get(async (req, res) => {
+    let msg = '', investment = null;
+    console.log(req.headers);
+    res.send({
+        success: true,
+        data: investment,
+        msg: msg
+    });
+})
+.put(async (req, res) => {
+    let msg = '', receipt = null;
+    // Not necesary to check if duplicate
+
+    // Check input
+    msg += req.body.userID && req.body.userID.length == 24 ? '' : 'Es necesario vincular este comprobante con un usuario válido. ';
+    msg += req.body.pendingProjectID && req.body.pendingProjectID.length == 24 ? '' : 'Favor de vincular este comprobante con un proyecto pendiente válido. ';
+    msg += req.body.receipt ? '' : 'Falta adjuntar el comprobante. ';
+    msg += req.body.amount && req.body.amount > 0 ? '' : 'Indica el monto pagado de este comprobante. ';
+    msg += req.body.symbol && req.body.symbol.length >= 3 ? '' : 'Indicá el símbolo de tu moneda, ej: "USD", "BTC", "ETH", etc. ';
+
+    if(msg == '') {
+        receipt = await registerReceipt({
+            userID: req.body.userID,
+            pendingProjectID: req.body.pendingProjectID,
+            receipt: req.body.receipt,
+            amount: req.body.amount,
+            symbol: 'USD' // hard-coded
+        });
+        if(receipt)
+            msg += 'Comprobante registrado exitosamente. ';
+    }
+
+    res.send({
+        success: receipt ? true : false,
+        data: receipt,
+        msg: msg
+    });
+});
+
+router.route('/investment/pending')
 .get(async (req, res) => {
     let msg = '', investment = null;
     console.log(req.headers);
@@ -102,13 +144,37 @@ router.route('/investment/receipt')
             stockQuantity: req.body.stockQuantity,
             thumbnail: req.body.thumbnail
         });
-        msg += 'Proyecto pendiente de financiación creado exitosamente. ';
+        if(pendingProject)
+            msg += 'Proyecto pendiente de financiación creado exitosamente. ';
     }
 
     res.send({
-        success: pendingProject && pendingProject._id ? true : false,
+        success: pendingProject ? true : false,
         data: pendingProject,
         msg: msg
+    });
+});
+
+router.route('/investment/transform')
+.get(async (req, res) => {
+    let msg = '', investment = null;
+    console.log(req.headers);
+    res.send({
+        success: true,
+        data: investment,
+        msg: msg
+    });
+})
+.put(async (req, res) => {
+    let msg = '', pendingInvestment = null, investment = null;
+    
+    pendingInvestment = await PendingInvestment.findById(req.body.pendingInvestmentID);
+    investment = await registerInvestment({
+        officeID: req.body.officeID,
+        name: pendingInvestment.name,
+        powerConsumption: req.body.powerConsumption,
+        stockPrice: req.body.stockPrice,
+        stockQuantity: req.body.stockQuantity
     });
 });
 

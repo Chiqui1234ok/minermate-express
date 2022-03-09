@@ -2,13 +2,17 @@ const { Schema, model } = require('mongoose');
 
 const PendingProjectReceiptSch = new Schema(
     {
-        UserID: {
+        userID: {
+            type: Schema.ObjectId,
+            required: true
+        },
+        pendingProjectID: {
             type: Schema.ObjectId,
             required: true
         },
         receipt: { // Image of receipt
             type: String,
-            required: true
+            required: false // TEMPORAL
         },
         amount: {
             type: Number,
@@ -24,4 +28,4 @@ const PendingProjectReceiptSch = new Schema(
     }
 );
 
-module.exports = model('PendingProject', PendingProjectReceiptSch);
+module.exports = model('PendingProjectReceipt', PendingProjectReceiptSch);
