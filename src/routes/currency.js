@@ -10,7 +10,6 @@ router.route('/currency/:symbol')
     msg += req.params.symbol && req.params.symbol.length >= 3 ? '' : 'Indicá una criptomoneda válida. ';
 
     if(msg == '') {
-
         currency = await getCurrency(req.params.symbol);
     }
 
