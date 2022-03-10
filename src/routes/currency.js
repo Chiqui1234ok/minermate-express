@@ -16,7 +16,7 @@ router.route('/currency/:symbol')
 
     res.send({
         success: true,
-        data: req.params,
+        data: currency,
         msg: msg 
     })
 });
