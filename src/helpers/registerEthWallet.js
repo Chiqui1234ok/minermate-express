@@ -11,7 +11,7 @@ helpers.registerEthWallet = async function(userId) {
         let walletToDb = await registerWallet({
             userId: userId,
             address: address,
-            network: 'ERC20'
+            network: 'ERC20',
         });
         //
         walletToDb = walletToDb.toObject(); // Mongoose doesn't allow extra properties, so I'll convert to plain object

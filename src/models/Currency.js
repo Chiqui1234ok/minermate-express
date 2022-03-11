@@ -13,7 +13,7 @@ const CurrencySch = new Schema(
         symbol: {
             type: String,
             required: true
-        },
+        }
     },
     {
         timestamps: true // Generate createdAt + updatedAt's dates

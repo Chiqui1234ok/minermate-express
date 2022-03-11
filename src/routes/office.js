@@ -25,10 +25,13 @@ router.route('/office')
 })
 .put(async (req, res) => {
     let msg = '', office = null;
-    msg += req.body.officeName ? '' : 'La oficina necesita un nombre. ';
-    msg += await officeExists(req.body.officeName) ? 'Esta oficina ya existe. ' : '';
+
+    // Check input 👇
+    msg += req.body.name ? '' : 'La oficina necesita un nombre. ';
+    msg += await officeExists(req.body.name) ? 'Esta oficina ya existe. ' : '';
+
     if(msg == '') {
-        office = await registerOffice(req.body.officeName);
+        office = await registerOffice(req.body.name);
         if(office && office._id)
             msg += 'Oficina registrada correctamente. ';
     }
@@ -41,10 +44,10 @@ router.route('/office')
 .patch(async (req, res) => {
     let msg = '', office = null;
     msg += req.body.officeID ? '' : 'Indicá qué oficina editar. ';
-    msg += req.body.newOfficeName ? '' : 'Indicá el nombre de la oficina. ';
+    msg += req.body.newName ? '' : 'Indicá el nombre de la oficina. ';
     if(msg == '') {
         office = await patchOffice(req.body.officeID, {
-            name: req.body.newOfficeName
+            name: req.body.newName
         });
         if(office && office._id)
             msg += 'Oficina editada correctamente. ';

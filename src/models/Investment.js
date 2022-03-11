@@ -22,7 +22,9 @@ const ProjectSch = new Schema(
             type: Number,
             default: 100
         },
-        availableBalance: [ // Balance (discounting debts)
+        // Available balance (discounting debts) 👇
+        // Is an array because a miner could mine more than 1 crypto
+        availableBalance: [
             {
                 amount: {
                     type: Number,
