@@ -15,6 +15,7 @@ router.route('/currency/:symbol')
     if(msg == '') {
         // Get currency from DB (if exists) 👇
         currency = await currencyExists(req.params.symbol); 
+        console.log(`CurrencyExists: ${currency}`);
         if(currency) {
             console.log('La criptomoneda está cacheada en la BD.');
             const dateDifference = now - currency.updatedAt;
@@ -25,7 +26,7 @@ router.route('/currency/:symbol')
                 currency = await patchCurrency({
                     name: currency.data.name,
                     price: currency.data.market_data.price_usd,
-                    symbol: currency.data.symbol
+                    symbol: currency.data.symbol.toUpperCase()
                 }, req.params.symbol); 
             }
         } else {
@@ -36,7 +37,7 @@ router.route('/currency/:symbol')
             currency = await registerCurrency({
                 name: currency.data.name,
                 price: currency.data.market_data.price_usd,
-                symbol: currency.data.symbol
+                symbol: currency.data.symbol.toUpperCase()
             });
         }
         // Check one more time for 'currency' var, just to print a nice msg
