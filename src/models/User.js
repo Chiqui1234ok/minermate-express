@@ -56,4 +56,4 @@ UserSch.methods.checkPassword = async function (password) {
     return bcryptjs.compare(password, this.password);
 };
 
-module.exports = model('User', UserSch);
+module.exports = model('User', UserSch, 'user');

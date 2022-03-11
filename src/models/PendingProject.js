@@ -28,4 +28,4 @@ const PendingProjectSch = new Schema(
     }
 );
 
-module.exports = model('PendingProject', PendingProjectSch);
+module.exports = model('PendingProject', PendingProjectSch, 'pendingProject');

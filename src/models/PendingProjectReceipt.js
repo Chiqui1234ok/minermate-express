@@ -28,4 +28,4 @@ const PendingProjectReceiptSch = new Schema(
     }
 );
 
-module.exports = model('PendingProjectReceipt', PendingProjectReceiptSch);
+module.exports = model('PendingProjectReceipt', PendingProjectReceiptSch, 'pendingProjectReceipt');

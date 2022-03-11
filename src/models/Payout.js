@@ -32,4 +32,4 @@ const PayoutSch = new Schema(
     }
 );
 
-module.exports = model('Payout', PayoutSch);
+module.exports = model('Payout', PayoutSch, 'payout');

@@ -9,4 +9,4 @@ const OfficeSch = new Schema(
     }
 );
 
-module.exports = model('Office', OfficeSch);
+module.exports = model('Office', OfficeSch, 'office');

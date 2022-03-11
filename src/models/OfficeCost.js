@@ -47,4 +47,4 @@ const OfficeCostSch = new Schema(
     }
 )
 
-module.exports = model('OfficeCost', OfficeCostSch);
+module.exports = model('OfficeCost', OfficeCostSch, 'officeCost');

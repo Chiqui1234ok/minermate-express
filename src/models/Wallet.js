@@ -24,4 +24,4 @@ const WalletSch = new Schema(
     }
 )
 
-module.exports = model('Wallet', WalletSch);
+module.exports = model('Wallet', WalletSch, 'wallet');

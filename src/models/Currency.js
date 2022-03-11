@@ -20,4 +20,4 @@ const CurrencySch = new Schema(
     }
 );
 
-module.exports = model('Currency', CurrencySch);
+module.exports = model('Currency', CurrencySch, 'currency');
