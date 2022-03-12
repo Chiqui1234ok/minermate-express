@@ -132,6 +132,7 @@ router.route('/office/cost') // Gets costs of one office
     // Count existent costs registered in this office, just to check if a new cost is submitted at end of this code.
     officeCostCounter = await OfficeCost.findById(req.body.officeCostID);
     officeCostCounter = officeCostCounter.payments.length;
+
     // Create new cost payed by investment/project 👇
     officeCost = await registerInvestmentCost(req.body.officeCostID, { // ID of OfficeCost passed from front-end
         investmentID: req.body.investmentID,
@@ -139,11 +140,13 @@ router.route('/office/cost') // Gets costs of one office
         symbol: req.body.symbol,
         tx: req.body.tx
     });
+
     // Update balance of that investment 👇
     patchedBalance = await patchAvailableBalance(req.body.investmentID, {
         amount: req.body.amount,
         symbol: req.body.symbol
     });
+    
     res.send({
         success: officeCost.payments && officeCost.payments.length > officeCostCounter && patchedBalance ? true : false,
         data: officeCost,

@@ -12,7 +12,7 @@ const PendingProjectReceiptSch = new Schema(
         },
         receipt: { // Image of receipt
             type: String,
-            required: false // TEMPORAL
+            default: '#'
         },
         amount: {
             type: Number,
