@@ -3,6 +3,7 @@
 ## Testeos
 ### Usuario
 - ✅ Creación del usuario
+- ✅ Creación del usuario (alt mode para inversores nuevos) (falta programar /user/alt)
 - ✅ Eliminación del usuario
 - ✅ Login del usuario
 - ✅ Logout del usuario

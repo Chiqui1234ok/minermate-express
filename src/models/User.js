@@ -20,7 +20,7 @@ const UserSch = new Schema(
             type: Number,
             required: true
         },
-        tyc: { // '#' is false, an URL is true
+        tyc: { // '#' is false | an URL is true
             type: String,
             default: '#'
         },
@@ -56,4 +56,4 @@ UserSch.methods.checkPassword = async function (password) {
     return bcryptjs.compare(password, this.password);
 };
 
-module.exports = model('User', UserSch);
+module.exports = model('User', UserSch, 'user');

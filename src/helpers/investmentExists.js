@@ -4,9 +4,15 @@ const   helpers = {},
 helpers.investmentExists = async function(name) {
     // If no investment finded, the fx() returns 'null'
     // That's because I created the condition below
-    const investment = await Investment.findOne({name: name});
-    console.log(investment);
-    return investment && investment._id ? true : false;
+    try {
+        const investment = await Investment.findOne({name: name});
+        console.log(investment);
+        return investment && investment._id ? true : false;
+    }
+    catch(err) {
+        console.log(err);
+        return false;
+    }
 }
 
 module.exports = helpers;

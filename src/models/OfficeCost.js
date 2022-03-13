@@ -14,13 +14,13 @@ const OfficeCostSch = new Schema(
             type: Number,
             required: true
         },
-        pending: { // This value contains pending payment: amount - payments[]
-            type: Number,
-            default: this.amount
-        },
         symbol: {
             type: String,
             required: true
+        },
+        pending: { // This value contains pending payment: amount - payments[]
+            type: Number,
+            default: this.amount
         },
         receipt: { // Ex: Photo of electricity's receipt
             type: String,
@@ -47,4 +47,4 @@ const OfficeCostSch = new Schema(
     }
 )
 
-module.exports = model('OfficeCost', OfficeCostSch);
+module.exports = model('OfficeCost', OfficeCostSch, 'officeCost');

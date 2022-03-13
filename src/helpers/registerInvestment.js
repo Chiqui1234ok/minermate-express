@@ -7,7 +7,8 @@ helpers.registerInvestment = async function(data) {
             officeID: data.officeID,
             name: data.name,
             powerConsumption: data.powerConsumption,
-            stockPrice: data.stockPrice        
+            stockPrice: data.stockPrice,
+            stockQuantity: data.stockQuantity && data.stockQuantity >= 100 ? data.stockQuantity : 100
         });
         await investment.save();
         return investment;

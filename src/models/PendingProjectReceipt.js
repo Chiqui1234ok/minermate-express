@@ -1,18 +1,18 @@
 const { Schema, model } = require('mongoose');
 
-const PayoutSch = new Schema(
+const PendingProjectReceiptSch = new Schema(
     {
-        userId: {
+        userID: {
             type: Schema.ObjectId,
             required: true
         },
-        investmentId: {
+        pendingProjectID: {
             type: Schema.ObjectId,
             required: true
         },
-        walletId: {
-            type: Schema.ObjectId,
-            required: true
+        receipt: { // Image of receipt
+            type: String,
+            default: '#'
         },
         amount: {
             type: Number,
@@ -20,11 +20,7 @@ const PayoutSch = new Schema(
         },
         symbol: {
             type: String,
-            required: true
-        },
-        tx: {
-            type: String,
-            default: '#'
+            default: 'USD'
         }
     },
     {
@@ -32,4 +28,4 @@ const PayoutSch = new Schema(
     }
 );
 
-module.exports = model('Payout', PayoutSch, 'payout');
+module.exports = model('PendingProjectReceipt', PendingProjectReceiptSch, 'pendingProjectReceipt');

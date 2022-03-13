@@ -1,27 +1,27 @@
-const   express = require('express');
+const   express = require('express'),
         session = require('express-session'),
         cors = require('cors'),
         morgan = require('morgan');
-// Init             👇
+// Init                 👇
 const app = express();
 const path = require('path');
 
-// Global variables 👇
+// Global variables     👇
 
 
-// CORS             👇
+// CORS                 👇
 app.use(cors());
 
-// Morgan             👇
+// Morgan               👇
 morgan.token('body', req => {
     return JSON.stringify(req.body)
 });
 app.use(morgan(':method :url :body'))
 
-// Settings         👇
+// Settings             👇
 app.set('port', process.env.PORT || 3000);
 
-// Middlewares      👇
+// Middlewares: JSON    👇
 app.use(express.urlencoded({
     extended: false
 })); // Convert form data to json
@@ -40,6 +40,7 @@ app.use(session({
 
 // Routes           👇
 app.use(
+    require('./routes/currency'),
     require('./routes/error'),
     require('./routes/index'),
     require('./routes/investment'),

@@ -1,17 +1,13 @@
 const { Schema, model } = require('mongoose');
 
-const WalletSch = new Schema(
+const CurrencySch = new Schema(
     {
-        userId: {
-            type: Schema.ObjectId,
-            required: true
-        },
-        address: {
+        name: {
             type: String,
             required: true
         },
-        network: {
-            type: String,
+        price: {
+            type: Number,
             required: true
         },
         symbol: {
@@ -22,6 +18,6 @@ const WalletSch = new Schema(
     {
         timestamps: true // Generate createdAt + updatedAt's dates
     }
-)
+);
 
-module.exports = model('Wallet', WalletSch, 'wallet');
+module.exports = model('Currency', CurrencySch, 'currency');

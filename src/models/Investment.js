@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const InvestmentSch = new Schema(
+const ProjectSch = new Schema(
     {
         officeID: {
             type: Schema.ObjectId,
@@ -22,7 +22,9 @@ const InvestmentSch = new Schema(
             type: Number,
             default: 100
         },
-        availableBalance: [ // Balance (discounting debts)
+        // Available balance (discounting debts) 👇
+        // Is an array because a miner could mine more than 1 crypto
+        availableBalance: [
             {
                 amount: {
                     type: Number,
@@ -36,12 +38,12 @@ const InvestmentSch = new Schema(
         ],
         thumbnail: {
             type: String,
-            default: 'https://minermate.net/assets/img/investments/default-mining-rig-mobile.webp'
+            default: 'https://minermate.net/assets/img/Projects/default-mining-rig-mobile.webp'
         },
         // For stats purpose
         // Sería bueno indicar el la fecha de creación y capital inicial para contrastarlo con lo minado en total
         // Y compararlo con holdear cripto en esa misma época, para ver qué inversión terminó ganando
-        totalMined: [
+        totalMined: [ // Here we store all pool's payments to Project
             {
                 amount: {
                     type: Number,
@@ -63,4 +65,4 @@ const InvestmentSch = new Schema(
     }
 );
 
-module.exports = model('Investment', InvestmentSch);
+module.exports = model('Project', ProjectSch, 'project');
