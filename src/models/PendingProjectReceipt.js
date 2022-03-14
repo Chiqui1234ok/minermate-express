@@ -6,7 +6,7 @@ const PendingProjectReceiptSch = new Schema(
             type: Schema.ObjectId,
             required: true
         },
-        pendingProjectID: {
+        projectID: { // Pending project ID / Project ID
             type: Schema.ObjectId,
             required: true
         },
