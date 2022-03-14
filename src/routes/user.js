@@ -25,7 +25,8 @@ router.route('/user')
             password: req.body.password
             // password: bcryptjs.hashSync(req.body.password, salt)
         });
-        msg += 'Usuario registrado correctamente. ';
+        if(newUser && newUser._id)
+            msg += 'Usuario registrado correctamente. ';
     }
     res.send({
         success: newUser && newUser._id ? true : false,
