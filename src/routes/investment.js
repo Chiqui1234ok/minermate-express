@@ -75,11 +75,6 @@ router.route('/investment')
     });
 });
 
-router.route('/investment/test')
-.put(async (req, res) => {
-    console.log(req.files);
-});
-
 router.route('/investment/receipt')
 .get(async (req, res) => {
     let msg = '', placeholder = null;
