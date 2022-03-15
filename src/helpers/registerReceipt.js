@@ -5,7 +5,7 @@ helpers.registerReceipt = async function(data) {
     try {
         const receipt = new PendingProjectReceipt({
             userID: data.userID,
-            pendingProjectID: data.pendingProjectID,
+            projectID: data.projectID,
             receipt: data.receipt,
             amount: data.amount,
             symbol: data.symbol
