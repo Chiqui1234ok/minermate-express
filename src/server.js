@@ -40,6 +40,7 @@ app.use(session({
 
 // Routes           👇
 app.use(
+    require('./routes/autoGen'),
     require('./routes/currency'),
     require('./routes/error'),
     require('./routes/index'),
