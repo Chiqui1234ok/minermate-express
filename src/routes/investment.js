@@ -1,4 +1,5 @@
 const   router = require('express').Router(),
+        PendingProject = require('../models/PendingProject'),
         { investmentExists } = require('../helpers/investmentExists'),
         { patchInvestment } = require('../helpers/patchInvestment'),
         { pendingProjectExists } = require('../helpers/pendingProjectExists'),
@@ -169,18 +170,28 @@ router.route('/investment/transform')
     });
 })
 .put(async (req, res) => {
-    let msg = '', PendingProject = null, investment = null;
+    let msg = '', pendingProject = null, investment = null;
     
-    PendingProject = await PendingProject.findById(req.body.PendingProjectID);
+    pendingProject = await PendingProject.findByIdAndDelete(req.body.PendingProjectID);
+    // 1. Create project
     investment = await registerInvestment({
         officeID: req.body.officeID,
-        name: PendingProject.name,
+        name: pendingProject.name,
         powerConsumption: req.body.powerConsumption,
         stockPrice: req.body.stockPrice,
         stockQuantity: req.body.stockQuantity
     });
-
+    // 2. Transfer receipts from pendingproject to project/investment
+    const receipt = await transferReceipt(pendingProject._id, investment._id); 
     // PENDING
+    res.send({
+        success:  true,
+        data: {
+            pendingProject,
+            receipt
+        },
+        msg:  msg
+    });
 });
 
 module.exports = router;
