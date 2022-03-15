@@ -54,8 +54,7 @@ router.route('/autogen/pendingProjectReceipt')
         'BNB'
     ];
     const   randomNumber = (Math.random()*10).toFixed(0),
-            randomAmount = (Math.random()*10).toFixed(0),
-            randomSymbol = (Math.random()*10).toFixed(0);
+            randomAmount = (Math.random()*100).toFixed(0);
     //
     user = await User.find().limit(1);
     pendingProject = await PendingProject.find().limit(1);
@@ -64,7 +63,7 @@ router.route('/autogen/pendingProjectReceipt')
         projectID: pendingProject[0]._id,
         receipt: '###',
         amount: randomAmount,
-        symbol: randomSymbol
+        symbol: defaultSymbol[randomNumber]
     });
     res.send({
         success: receipt && receipt._id ? true : false,
