@@ -6,6 +6,7 @@ const   router = require('express').Router(),
         { registerInvestment } = require('../helpers/registerInvestment'),
         { registerPendingProject } = require('../helpers/registerPendingProject'),
         { registerReceipt } = require('../helpers/registerReceipt'),
+        { transferReceipt } = require('../helpers/transferReceipt'),
         { upload } = require('../helpers/upload.js');
         
 
@@ -172,7 +173,7 @@ router.route('/investment/transform')
 .put(async (req, res) => {
     let msg = '', pendingProject = null, investment = null;
     
-    pendingProject = await PendingProject.findByIdAndDelete(req.body.PendingProjectID);
+    pendingProject = await PendingProject.findByIdAndDelete(req.body.pendingProjectID);
     // 1. Create project
     investment = await registerInvestment({
         officeID: req.body.officeID,
