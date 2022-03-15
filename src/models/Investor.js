@@ -25,6 +25,10 @@ const InvestorSch = new Schema(
             stocks: {
                 type: Number,
                 required: true
+            },
+            stocksPercentaje: {
+                type: Number,
+                required: true
             }
         }]
     }
