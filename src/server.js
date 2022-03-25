@@ -47,6 +47,7 @@ app.use(
     require('./routes/investment'),
     require('./routes/office'),
     require('./routes/payout'),
+    require('./routes/pendingInvestment'),
     require('./routes/user'),
     require('./routes/wallet')
 );

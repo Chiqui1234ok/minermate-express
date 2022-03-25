@@ -21,7 +21,7 @@ const InvestorSch = new Schema(
                     type: String,
                     required: true
                 },
-                createdAt: {
+                dateOfConversion: {
                     type: Date,
                     required: true
                 }

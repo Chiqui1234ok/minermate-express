@@ -10,6 +10,10 @@ const PendingProjectSch = new Schema(
             type: String,
             required: true
         },
+        availableStock: { // Dynamic counter of stocks, which can be sold
+            type: Number,
+            default: 100
+        },
         stockPrice: {
             type: Number,
             required: true

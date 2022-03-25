@@ -14,6 +14,10 @@ const PendingProjectReceiptSch = new Schema(
             type: String,
             default: '#'
         },
+        stocksBought: { // Can be decimal in case the user won't buy all stocks in one payment
+            type: Number,
+            required: false
+        },
         amount: {
             type: Number,
             required: true
