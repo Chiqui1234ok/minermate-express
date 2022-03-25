@@ -20,6 +20,10 @@ const InvestorSch = new Schema(
                 symbol: {
                     type: String,
                     required: true
+                },
+                createdAt: {
+                    type: Date,
+                    required: true
                 }
             }],
             stocks: {
