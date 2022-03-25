@@ -8,7 +8,7 @@ const PendingInvestorSch = new Schema(
             required: true
         },
         intentionToPay: [{
-            pendingProjectID: { // PendingProjectID, later on will be converted to project ID (when pending goes finale <3)
+            projectID: { // PendingProjectID, later on will be converted to project ID (when pending goes finale <3)
                 type: Schema.ObjectId,
                 required: true
             },
