@@ -1,4 +1,4 @@
 .env
 node_modules
-autopress
-tests
+autopress/db
+autopress/privateAPI
