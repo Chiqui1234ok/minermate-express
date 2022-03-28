@@ -2,3 +2,4 @@
 node_modules
 autopress/db
 autopress/privateAPI
+package-lock.json
