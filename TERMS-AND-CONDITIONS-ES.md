@@ -23,7 +23,7 @@
 
 <h3 class="underlined">1.2.0 Acciones</h3>
 <p>
-    Nuestros proyectos se tratan de una forma muy similar a la de un <strong>Fondo común de inversión</strong>. Cuándo los inversores compran sus acciones del fondo, ya sea con dinero o entregando productos indicados en el presupuesto, están aportando unidades de capital representado mediante <strong>acciones</strong>.
+    Nuestros proyectos son un <strong>Fondo común de inversión</strong>. Cuándo los inversores compran sus acciones del fondo, ya sea con dinero o entregando productos indicados en el presupuesto, están aportando unidades de capital representado mediante <strong>acciones</strong>.
 </p>
 
 <div class="example">
